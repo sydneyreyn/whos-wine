@@ -1,13 +1,1061 @@
 # source: https://eu1.prisma.sh/sydney0709-1ec177/wine/dev
-# timestamp: Tue Jul 24 2018 14:09:34 GMT+0100 (WEST)
+# timestamp: Wed Jul 25 2018 15:29:34 GMT+0100 (WEST)
+
+type AggregateCollection {
+  count: Int!
+}
+
+type AggregateComment {
+  count: Int!
+}
+
+type AggregateFood {
+  count: Int!
+}
+
+type AggregateLike {
+  count: Int!
+}
+
+type AggregateOther {
+  count: Int!
+}
+
+type AggregateSetting {
+  count: Int!
+}
 
 type AggregateUser {
+  count: Int!
+}
+
+type AggregateWine {
   count: Int!
 }
 
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type Collection implements Node {
+  id: ID!
+  name: String!
+  description: String!
+  wines(where: WineWhereInput, orderBy: WineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Wine!]
+  settings(where: SettingWhereInput, orderBy: SettingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Setting!]
+  others(where: OtherWhereInput, orderBy: OtherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Other!]
+  foods(where: FoodWhereInput, orderBy: FoodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Food!]
+  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+}
+
+"""A connection to a list of items."""
+type CollectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CollectionEdge]!
+  aggregate: AggregateCollection!
+}
+
+input CollectionCreateInput {
+  name: String!
+  description: String!
+  wines: WineCreateManyInput
+  settings: SettingCreateManyInput
+  others: OtherCreateManyInput
+  foods: FoodCreateManyInput
+  likes: LikeCreateManyWithoutCollectionInput
+  comments: CommentCreateManyWithoutCollectionInput
+}
+
+input CollectionCreateManyInput {
+  create: [CollectionCreateInput!]
+  connect: [CollectionWhereUniqueInput!]
+}
+
+input CollectionCreateOneWithoutCommentsInput {
+  create: CollectionCreateWithoutCommentsInput
+  connect: CollectionWhereUniqueInput
+}
+
+input CollectionCreateOneWithoutLikesInput {
+  create: CollectionCreateWithoutLikesInput
+  connect: CollectionWhereUniqueInput
+}
+
+input CollectionCreateWithoutCommentsInput {
+  name: String!
+  description: String!
+  wines: WineCreateManyInput
+  settings: SettingCreateManyInput
+  others: OtherCreateManyInput
+  foods: FoodCreateManyInput
+  likes: LikeCreateManyWithoutCollectionInput
+}
+
+input CollectionCreateWithoutLikesInput {
+  name: String!
+  description: String!
+  wines: WineCreateManyInput
+  settings: SettingCreateManyInput
+  others: OtherCreateManyInput
+  foods: FoodCreateManyInput
+  comments: CommentCreateManyWithoutCollectionInput
+}
+
+"""An edge in a connection."""
+type CollectionEdge {
+  """The item at the end of the edge."""
+  node: Collection!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CollectionOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CollectionPreviousValues {
+  id: ID!
+  name: String!
+  description: String!
+}
+
+type CollectionSubscriptionPayload {
+  mutation: MutationType!
+  node: Collection
+  updatedFields: [String!]
+  previousValues: CollectionPreviousValues
+}
+
+input CollectionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CollectionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CollectionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CollectionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CollectionWhereInput
+}
+
+input CollectionUpdateDataInput {
+  name: String
+  description: String
+  wines: WineUpdateManyInput
+  settings: SettingUpdateManyInput
+  others: OtherUpdateManyInput
+  foods: FoodUpdateManyInput
+  likes: LikeUpdateManyWithoutCollectionInput
+  comments: CommentUpdateManyWithoutCollectionInput
+}
+
+input CollectionUpdateInput {
+  name: String
+  description: String
+  wines: WineUpdateManyInput
+  settings: SettingUpdateManyInput
+  others: OtherUpdateManyInput
+  foods: FoodUpdateManyInput
+  likes: LikeUpdateManyWithoutCollectionInput
+  comments: CommentUpdateManyWithoutCollectionInput
+}
+
+input CollectionUpdateManyInput {
+  create: [CollectionCreateInput!]
+  connect: [CollectionWhereUniqueInput!]
+  disconnect: [CollectionWhereUniqueInput!]
+  delete: [CollectionWhereUniqueInput!]
+  update: [CollectionUpdateWithWhereUniqueNestedInput!]
+  upsert: [CollectionUpsertWithWhereUniqueNestedInput!]
+}
+
+input CollectionUpdateOneWithoutCommentsInput {
+  create: CollectionCreateWithoutCommentsInput
+  connect: CollectionWhereUniqueInput
+  delete: Boolean
+  update: CollectionUpdateWithoutCommentsDataInput
+  upsert: CollectionUpsertWithoutCommentsInput
+}
+
+input CollectionUpdateOneWithoutLikesInput {
+  create: CollectionCreateWithoutLikesInput
+  connect: CollectionWhereUniqueInput
+  delete: Boolean
+  update: CollectionUpdateWithoutLikesDataInput
+  upsert: CollectionUpsertWithoutLikesInput
+}
+
+input CollectionUpdateWithoutCommentsDataInput {
+  name: String
+  description: String
+  wines: WineUpdateManyInput
+  settings: SettingUpdateManyInput
+  others: OtherUpdateManyInput
+  foods: FoodUpdateManyInput
+  likes: LikeUpdateManyWithoutCollectionInput
+}
+
+input CollectionUpdateWithoutLikesDataInput {
+  name: String
+  description: String
+  wines: WineUpdateManyInput
+  settings: SettingUpdateManyInput
+  others: OtherUpdateManyInput
+  foods: FoodUpdateManyInput
+  comments: CommentUpdateManyWithoutCollectionInput
+}
+
+input CollectionUpdateWithWhereUniqueNestedInput {
+  where: CollectionWhereUniqueInput!
+  data: CollectionUpdateDataInput!
+}
+
+input CollectionUpsertWithoutCommentsInput {
+  update: CollectionUpdateWithoutCommentsDataInput!
+  create: CollectionCreateWithoutCommentsInput!
+}
+
+input CollectionUpsertWithoutLikesInput {
+  update: CollectionUpdateWithoutLikesDataInput!
+  create: CollectionCreateWithoutLikesInput!
+}
+
+input CollectionUpsertWithWhereUniqueNestedInput {
+  where: CollectionWhereUniqueInput!
+  update: CollectionUpdateDataInput!
+  create: CollectionCreateInput!
+}
+
+input CollectionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CollectionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CollectionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CollectionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  wines_every: WineWhereInput
+  wines_some: WineWhereInput
+  wines_none: WineWhereInput
+  settings_every: SettingWhereInput
+  settings_some: SettingWhereInput
+  settings_none: SettingWhereInput
+  others_every: OtherWhereInput
+  others_some: OtherWhereInput
+  others_none: OtherWhereInput
+  foods_every: FoodWhereInput
+  foods_some: FoodWhereInput
+  foods_none: FoodWhereInput
+  likes_every: LikeWhereInput
+  likes_some: LikeWhereInput
+  likes_none: LikeWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  _MagicalBackRelation_CollectionToUser_every: UserWhereInput
+  _MagicalBackRelation_CollectionToUser_some: UserWhereInput
+  _MagicalBackRelation_CollectionToUser_none: UserWhereInput
+}
+
+input CollectionWhereUniqueInput {
+  id: ID
+}
+
+type Comment {
+  text: String!
+  author(where: UserWhereInput): User!
+  collection(where: CollectionWhereInput): Collection!
+}
+
+"""A connection to a list of items."""
+type CommentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommentEdge]!
+  aggregate: AggregateComment!
+}
+
+input CommentCreateInput {
+  text: String!
+  author: UserCreateOneWithoutCommentsInput!
+  collection: CollectionCreateOneWithoutCommentsInput!
+}
+
+input CommentCreateManyWithoutAuthorInput {
+  create: [CommentCreateWithoutAuthorInput!]
+}
+
+input CommentCreateManyWithoutCollectionInput {
+  create: [CommentCreateWithoutCollectionInput!]
+}
+
+input CommentCreateWithoutAuthorInput {
+  text: String!
+  collection: CollectionCreateOneWithoutCommentsInput!
+}
+
+input CommentCreateWithoutCollectionInput {
+  text: String!
+  author: UserCreateOneWithoutCommentsInput!
+}
+
+"""An edge in a connection."""
+type CommentEdge {
+  """The item at the end of the edge."""
+  node: Comment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CommentOrderByInput {
+  text_ASC
+  text_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CommentPreviousValues {
+  text: String!
+}
+
+type CommentSubscriptionPayload {
+  mutation: MutationType!
+  node: Comment
+  updatedFields: [String!]
+  previousValues: CommentPreviousValues
+}
+
+input CommentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CommentWhereInput
+}
+
+input CommentUpdateInput {
+  text: String
+  author: UserUpdateOneWithoutCommentsInput
+  collection: CollectionUpdateOneWithoutCommentsInput
+}
+
+input CommentUpdateManyWithoutAuthorInput {
+  create: [CommentCreateWithoutAuthorInput!]
+}
+
+input CommentUpdateManyWithoutCollectionInput {
+  create: [CommentCreateWithoutCollectionInput!]
+}
+
+input CommentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentWhereInput!]
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  author: UserWhereInput
+  collection: CollectionWhereInput
+}
+
+type Food implements Node {
+  id: ID!
+  name: String!
+  Description: String!
+}
+
+"""A connection to a list of items."""
+type FoodConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [FoodEdge]!
+  aggregate: AggregateFood!
+}
+
+input FoodCreateInput {
+  name: String!
+  Description: String!
+}
+
+input FoodCreateManyInput {
+  create: [FoodCreateInput!]
+  connect: [FoodWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type FoodEdge {
+  """The item at the end of the edge."""
+  node: Food!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum FoodOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  Description_ASC
+  Description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type FoodPreviousValues {
+  id: ID!
+  name: String!
+  Description: String!
+}
+
+type FoodSubscriptionPayload {
+  mutation: MutationType!
+  node: Food
+  updatedFields: [String!]
+  previousValues: FoodPreviousValues
+}
+
+input FoodSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FoodSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FoodSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FoodSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: FoodWhereInput
+}
+
+input FoodUpdateDataInput {
+  name: String
+  Description: String
+}
+
+input FoodUpdateInput {
+  name: String
+  Description: String
+}
+
+input FoodUpdateManyInput {
+  create: [FoodCreateInput!]
+  connect: [FoodWhereUniqueInput!]
+  disconnect: [FoodWhereUniqueInput!]
+  delete: [FoodWhereUniqueInput!]
+  update: [FoodUpdateWithWhereUniqueNestedInput!]
+  upsert: [FoodUpsertWithWhereUniqueNestedInput!]
+}
+
+input FoodUpdateWithWhereUniqueNestedInput {
+  where: FoodWhereUniqueInput!
+  data: FoodUpdateDataInput!
+}
+
+input FoodUpsertWithWhereUniqueNestedInput {
+  where: FoodWhereUniqueInput!
+  update: FoodUpdateDataInput!
+  create: FoodCreateInput!
+}
+
+input FoodWhereInput {
+  """Logical AND on all given filters."""
+  AND: [FoodWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [FoodWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [FoodWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  Description: String
+
+  """All values that are not equal to given value."""
+  Description_not: String
+
+  """All values that are contained in given list."""
+  Description_in: [String!]
+
+  """All values that are not contained in given list."""
+  Description_not_in: [String!]
+
+  """All values less than the given value."""
+  Description_lt: String
+
+  """All values less than or equal the given value."""
+  Description_lte: String
+
+  """All values greater than the given value."""
+  Description_gt: String
+
+  """All values greater than or equal the given value."""
+  Description_gte: String
+
+  """All values containing the given string."""
+  Description_contains: String
+
+  """All values not containing the given string."""
+  Description_not_contains: String
+
+  """All values starting with the given string."""
+  Description_starts_with: String
+
+  """All values not starting with the given string."""
+  Description_not_starts_with: String
+
+  """All values ending with the given string."""
+  Description_ends_with: String
+
+  """All values not ending with the given string."""
+  Description_not_ends_with: String
+  _MagicalBackRelation_CollectionToFood_every: CollectionWhereInput
+  _MagicalBackRelation_CollectionToFood_some: CollectionWhereInput
+  _MagicalBackRelation_CollectionToFood_none: CollectionWhereInput
+}
+
+input FoodWhereUniqueInput {
+  id: ID
+}
+
+type Like implements Node {
+  id: ID!
+  author(where: UserWhereInput): User!
+  collection(where: CollectionWhereInput): Collection!
+}
+
+"""A connection to a list of items."""
+type LikeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LikeEdge]!
+  aggregate: AggregateLike!
+}
+
+input LikeCreateInput {
+  author: UserCreateOneWithoutLikesInput!
+  collection: CollectionCreateOneWithoutLikesInput!
+}
+
+input LikeCreateManyWithoutAuthorInput {
+  create: [LikeCreateWithoutAuthorInput!]
+  connect: [LikeWhereUniqueInput!]
+}
+
+input LikeCreateManyWithoutCollectionInput {
+  create: [LikeCreateWithoutCollectionInput!]
+  connect: [LikeWhereUniqueInput!]
+}
+
+input LikeCreateWithoutAuthorInput {
+  collection: CollectionCreateOneWithoutLikesInput!
+}
+
+input LikeCreateWithoutCollectionInput {
+  author: UserCreateOneWithoutLikesInput!
+}
+
+"""An edge in a connection."""
+type LikeEdge {
+  """The item at the end of the edge."""
+  node: Like!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum LikeOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type LikePreviousValues {
+  id: ID!
+}
+
+type LikeSubscriptionPayload {
+  mutation: MutationType!
+  node: Like
+  updatedFields: [String!]
+  previousValues: LikePreviousValues
+}
+
+input LikeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: LikeWhereInput
+}
+
+input LikeUpdateInput {
+  author: UserUpdateOneWithoutLikesInput
+  collection: CollectionUpdateOneWithoutLikesInput
+}
+
+input LikeUpdateManyWithoutAuthorInput {
+  create: [LikeCreateWithoutAuthorInput!]
+  connect: [LikeWhereUniqueInput!]
+  disconnect: [LikeWhereUniqueInput!]
+  delete: [LikeWhereUniqueInput!]
+  update: [LikeUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [LikeUpsertWithWhereUniqueWithoutAuthorInput!]
+}
+
+input LikeUpdateManyWithoutCollectionInput {
+  create: [LikeCreateWithoutCollectionInput!]
+  connect: [LikeWhereUniqueInput!]
+  disconnect: [LikeWhereUniqueInput!]
+  delete: [LikeWhereUniqueInput!]
+  update: [LikeUpdateWithWhereUniqueWithoutCollectionInput!]
+  upsert: [LikeUpsertWithWhereUniqueWithoutCollectionInput!]
+}
+
+input LikeUpdateWithoutAuthorDataInput {
+  collection: CollectionUpdateOneWithoutLikesInput
+}
+
+input LikeUpdateWithoutCollectionDataInput {
+  author: UserUpdateOneWithoutLikesInput
+}
+
+input LikeUpdateWithWhereUniqueWithoutAuthorInput {
+  where: LikeWhereUniqueInput!
+  data: LikeUpdateWithoutAuthorDataInput!
+}
+
+input LikeUpdateWithWhereUniqueWithoutCollectionInput {
+  where: LikeWhereUniqueInput!
+  data: LikeUpdateWithoutCollectionDataInput!
+}
+
+input LikeUpsertWithWhereUniqueWithoutAuthorInput {
+  where: LikeWhereUniqueInput!
+  update: LikeUpdateWithoutAuthorDataInput!
+  create: LikeCreateWithoutAuthorInput!
+}
+
+input LikeUpsertWithWhereUniqueWithoutCollectionInput {
+  where: LikeWhereUniqueInput!
+  update: LikeUpdateWithoutCollectionDataInput!
+  create: LikeCreateWithoutCollectionInput!
+}
+
+input LikeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [LikeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [LikeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [LikeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  author: UserWhereInput
+  collection: CollectionWhereInput
+}
+
+input LikeWhereUniqueInput {
+  id: ID
 }
 
 """
@@ -18,11 +1066,50 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createLike(data: LikeCreateInput!): Like!
+  createComment(data: CommentCreateInput!): Comment!
+  createSetting(data: SettingCreateInput!): Setting!
+  createOther(data: OtherCreateInput!): Other!
+  createWine(data: WineCreateInput!): Wine!
+  createCollection(data: CollectionCreateInput!): Collection!
+  createFood(data: FoodCreateInput!): Food!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateLike(data: LikeUpdateInput!, where: LikeWhereUniqueInput!): Like
+  updateSetting(data: SettingUpdateInput!, where: SettingWhereUniqueInput!): Setting
+  updateOther(data: OtherUpdateInput!, where: OtherWhereUniqueInput!): Other
+  updateWine(data: WineUpdateInput!, where: WineWhereUniqueInput!): Wine
+  updateCollection(data: CollectionUpdateInput!, where: CollectionWhereUniqueInput!): Collection
+  updateFood(data: FoodUpdateInput!, where: FoodWhereUniqueInput!): Food
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteLike(where: LikeWhereUniqueInput!): Like
+  deleteSetting(where: SettingWhereUniqueInput!): Setting
+  deleteOther(where: OtherWhereUniqueInput!): Other
+  deleteWine(where: WineWhereUniqueInput!): Wine
+  deleteCollection(where: CollectionWhereUniqueInput!): Collection
+  deleteFood(where: FoodWhereUniqueInput!): Food
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertLike(where: LikeWhereUniqueInput!, create: LikeCreateInput!, update: LikeUpdateInput!): Like!
+  upsertSetting(where: SettingWhereUniqueInput!, create: SettingCreateInput!, update: SettingUpdateInput!): Setting!
+  upsertOther(where: OtherWhereUniqueInput!, create: OtherCreateInput!, update: OtherUpdateInput!): Other!
+  upsertWine(where: WineWhereUniqueInput!, create: WineCreateInput!, update: WineUpdateInput!): Wine!
+  upsertCollection(where: CollectionWhereUniqueInput!, create: CollectionCreateInput!, update: CollectionUpdateInput!): Collection!
+  upsertFood(where: FoodWhereUniqueInput!, create: FoodCreateInput!, update: FoodUpdateInput!): Food!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyLikes(data: LikeUpdateInput!, where: LikeWhereInput): BatchPayload!
+  updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
+  updateManySettings(data: SettingUpdateInput!, where: SettingWhereInput): BatchPayload!
+  updateManyOthers(data: OtherUpdateInput!, where: OtherWhereInput): BatchPayload!
+  updateManyWines(data: WineUpdateInput!, where: WineWhereInput): BatchPayload!
+  updateManyCollections(data: CollectionUpdateInput!, where: CollectionWhereInput): BatchPayload!
+  updateManyFoods(data: FoodUpdateInput!, where: FoodWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyLikes(where: LikeWhereInput): BatchPayload!
+  deleteManyComments(where: CommentWhereInput): BatchPayload!
+  deleteManySettings(where: SettingWhereInput): BatchPayload!
+  deleteManyOthers(where: OtherWhereInput): BatchPayload!
+  deleteManyWines(where: WineWhereInput): BatchPayload!
+  deleteManyCollections(where: CollectionWhereInput): BatchPayload!
+  deleteManyFoods(where: FoodWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -35,6 +1122,267 @@ enum MutationType {
 interface Node {
   """The id of the object."""
   id: ID!
+}
+
+type Other implements Node {
+  id: ID!
+  name: String!
+  Description: String!
+}
+
+"""A connection to a list of items."""
+type OtherConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OtherEdge]!
+  aggregate: AggregateOther!
+}
+
+input OtherCreateInput {
+  name: String!
+  Description: String!
+}
+
+input OtherCreateManyInput {
+  create: [OtherCreateInput!]
+  connect: [OtherWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type OtherEdge {
+  """The item at the end of the edge."""
+  node: Other!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum OtherOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  Description_ASC
+  Description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type OtherPreviousValues {
+  id: ID!
+  name: String!
+  Description: String!
+}
+
+type OtherSubscriptionPayload {
+  mutation: MutationType!
+  node: Other
+  updatedFields: [String!]
+  previousValues: OtherPreviousValues
+}
+
+input OtherSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OtherSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OtherSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OtherSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OtherWhereInput
+}
+
+input OtherUpdateDataInput {
+  name: String
+  Description: String
+}
+
+input OtherUpdateInput {
+  name: String
+  Description: String
+}
+
+input OtherUpdateManyInput {
+  create: [OtherCreateInput!]
+  connect: [OtherWhereUniqueInput!]
+  disconnect: [OtherWhereUniqueInput!]
+  delete: [OtherWhereUniqueInput!]
+  update: [OtherUpdateWithWhereUniqueNestedInput!]
+  upsert: [OtherUpsertWithWhereUniqueNestedInput!]
+}
+
+input OtherUpdateWithWhereUniqueNestedInput {
+  where: OtherWhereUniqueInput!
+  data: OtherUpdateDataInput!
+}
+
+input OtherUpsertWithWhereUniqueNestedInput {
+  where: OtherWhereUniqueInput!
+  update: OtherUpdateDataInput!
+  create: OtherCreateInput!
+}
+
+input OtherWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OtherWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OtherWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OtherWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  Description: String
+
+  """All values that are not equal to given value."""
+  Description_not: String
+
+  """All values that are contained in given list."""
+  Description_in: [String!]
+
+  """All values that are not contained in given list."""
+  Description_not_in: [String!]
+
+  """All values less than the given value."""
+  Description_lt: String
+
+  """All values less than or equal the given value."""
+  Description_lte: String
+
+  """All values greater than the given value."""
+  Description_gt: String
+
+  """All values greater than or equal the given value."""
+  Description_gte: String
+
+  """All values containing the given string."""
+  Description_contains: String
+
+  """All values not containing the given string."""
+  Description_not_contains: String
+
+  """All values starting with the given string."""
+  Description_starts_with: String
+
+  """All values not starting with the given string."""
+  Description_not_starts_with: String
+
+  """All values ending with the given string."""
+  Description_ends_with: String
+
+  """All values not ending with the given string."""
+  Description_not_ends_with: String
+  _MagicalBackRelation_CollectionToOther_every: CollectionWhereInput
+  _MagicalBackRelation_CollectionToOther_some: CollectionWhereInput
+  _MagicalBackRelation_CollectionToOther_none: CollectionWhereInput
+}
+
+input OtherWhereUniqueInput {
+  id: ID
 }
 
 """Information about pagination in a connection."""
@@ -54,8 +1402,28 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like]!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  settings(where: SettingWhereInput, orderBy: SettingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Setting]!
+  others(where: OtherWhereInput, orderBy: OtherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Other]!
+  wines(where: WineWhereInput, orderBy: WineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Wine]!
+  collections(where: CollectionWhereInput, orderBy: CollectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Collection]!
+  foods(where: FoodWhereInput, orderBy: FoodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Food]!
   user(where: UserWhereUniqueInput!): User
+  like(where: LikeWhereUniqueInput!): Like
+  setting(where: SettingWhereUniqueInput!): Setting
+  other(where: OtherWhereUniqueInput!): Other
+  wine(where: WineWhereUniqueInput!): Wine
+  collection(where: CollectionWhereUniqueInput!): Collection
+  food(where: FoodWhereUniqueInput!): Food
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  likesConnection(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikeConnection!
+  commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  settingsConnection(where: SettingWhereInput, orderBy: SettingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SettingConnection!
+  othersConnection(where: OtherWhereInput, orderBy: OtherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OtherConnection!
+  winesConnection(where: WineWhereInput, orderBy: WineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WineConnection!
+  collectionsConnection(where: CollectionWhereInput, orderBy: CollectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CollectionConnection!
+  foodsConnection(where: FoodWhereInput, orderBy: FoodOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FoodConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -64,8 +1432,276 @@ type Query {
   ): Node
 }
 
+type Setting implements Node {
+  id: ID!
+  name: String!
+  Description: String!
+}
+
+"""A connection to a list of items."""
+type SettingConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SettingEdge]!
+  aggregate: AggregateSetting!
+}
+
+input SettingCreateInput {
+  name: String!
+  Description: String!
+}
+
+input SettingCreateManyInput {
+  create: [SettingCreateInput!]
+  connect: [SettingWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type SettingEdge {
+  """The item at the end of the edge."""
+  node: Setting!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SettingOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  Description_ASC
+  Description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SettingPreviousValues {
+  id: ID!
+  name: String!
+  Description: String!
+}
+
+type SettingSubscriptionPayload {
+  mutation: MutationType!
+  node: Setting
+  updatedFields: [String!]
+  previousValues: SettingPreviousValues
+}
+
+input SettingSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SettingSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SettingSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SettingSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SettingWhereInput
+}
+
+input SettingUpdateDataInput {
+  name: String
+  Description: String
+}
+
+input SettingUpdateInput {
+  name: String
+  Description: String
+}
+
+input SettingUpdateManyInput {
+  create: [SettingCreateInput!]
+  connect: [SettingWhereUniqueInput!]
+  disconnect: [SettingWhereUniqueInput!]
+  delete: [SettingWhereUniqueInput!]
+  update: [SettingUpdateWithWhereUniqueNestedInput!]
+  upsert: [SettingUpsertWithWhereUniqueNestedInput!]
+}
+
+input SettingUpdateWithWhereUniqueNestedInput {
+  where: SettingWhereUniqueInput!
+  data: SettingUpdateDataInput!
+}
+
+input SettingUpsertWithWhereUniqueNestedInput {
+  where: SettingWhereUniqueInput!
+  update: SettingUpdateDataInput!
+  create: SettingCreateInput!
+}
+
+input SettingWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SettingWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SettingWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SettingWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  Description: String
+
+  """All values that are not equal to given value."""
+  Description_not: String
+
+  """All values that are contained in given list."""
+  Description_in: [String!]
+
+  """All values that are not contained in given list."""
+  Description_not_in: [String!]
+
+  """All values less than the given value."""
+  Description_lt: String
+
+  """All values less than or equal the given value."""
+  Description_lte: String
+
+  """All values greater than the given value."""
+  Description_gt: String
+
+  """All values greater than or equal the given value."""
+  Description_gte: String
+
+  """All values containing the given string."""
+  Description_contains: String
+
+  """All values not containing the given string."""
+  Description_not_contains: String
+
+  """All values starting with the given string."""
+  Description_starts_with: String
+
+  """All values not starting with the given string."""
+  Description_not_starts_with: String
+
+  """All values ending with the given string."""
+  Description_ends_with: String
+
+  """All values not ending with the given string."""
+  Description_not_ends_with: String
+  _MagicalBackRelation_CollectionToSetting_every: CollectionWhereInput
+  _MagicalBackRelation_CollectionToSetting_some: CollectionWhereInput
+  _MagicalBackRelation_CollectionToSetting_none: CollectionWhereInput
+}
+
+input SettingWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  like(where: LikeSubscriptionWhereInput): LikeSubscriptionPayload
+  comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  setting(where: SettingSubscriptionWhereInput): SettingSubscriptionPayload
+  other(where: OtherSubscriptionWhereInput): OtherSubscriptionPayload
+  wine(where: WineSubscriptionWhereInput): WineSubscriptionPayload
+  collection(where: CollectionSubscriptionWhereInput): CollectionSubscriptionPayload
+  food(where: FoodSubscriptionWhereInput): FoodSubscriptionPayload
 }
 
 type User implements Node {
@@ -73,6 +1709,9 @@ type User implements Node {
   name: String!
   email: String!
   password: String!
+  collections(where: CollectionWhereInput, orderBy: CollectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Collection!]
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
+  likes(where: LikeWhereInput, orderBy: LikeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Like!]
 }
 
 """A connection to a list of items."""
@@ -89,6 +1728,35 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  collections: CollectionCreateManyInput
+  comments: CommentCreateManyWithoutAuthorInput
+  likes: LikeCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutCommentsInput {
+  create: UserCreateWithoutCommentsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutLikesInput {
+  create: UserCreateWithoutLikesInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutCommentsInput {
+  name: String!
+  email: String!
+  password: String!
+  collections: CollectionCreateManyInput
+  likes: LikeCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutLikesInput {
+  name: String!
+  email: String!
+  password: String!
+  collections: CollectionCreateManyInput
+  comments: CommentCreateManyWithoutAuthorInput
 }
 
 """An edge in a connection."""
@@ -165,6 +1833,51 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  collections: CollectionUpdateManyInput
+  comments: CommentUpdateManyWithoutAuthorInput
+  likes: LikeUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateOneWithoutCommentsInput {
+  create: UserCreateWithoutCommentsInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutCommentsDataInput
+  upsert: UserUpsertWithoutCommentsInput
+}
+
+input UserUpdateOneWithoutLikesInput {
+  create: UserCreateWithoutLikesInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutLikesDataInput
+  upsert: UserUpsertWithoutLikesInput
+}
+
+input UserUpdateWithoutCommentsDataInput {
+  name: String
+  email: String
+  password: String
+  collections: CollectionUpdateManyInput
+  likes: LikeUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutLikesDataInput {
+  name: String
+  email: String
+  password: String
+  collections: CollectionUpdateManyInput
+  comments: CommentUpdateManyWithoutAuthorInput
+}
+
+input UserUpsertWithoutCommentsInput {
+  update: UserUpdateWithoutCommentsDataInput!
+  create: UserCreateWithoutCommentsInput!
+}
+
+input UserUpsertWithoutLikesInput {
+  update: UserUpdateWithoutLikesDataInput!
+  create: UserCreateWithoutLikesInput!
 }
 
 input UserWhereInput {
@@ -336,9 +2049,355 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  collections_every: CollectionWhereInput
+  collections_some: CollectionWhereInput
+  collections_none: CollectionWhereInput
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
+  likes_every: LikeWhereInput
+  likes_some: LikeWhereInput
+  likes_none: LikeWhereInput
 }
 
 input UserWhereUniqueInput {
   id: ID
   email: String
+}
+
+type Wine implements Node {
+  id: ID!
+  name: String!
+  type: String!
+  price: Float!
+  Description: String!
+}
+
+"""A connection to a list of items."""
+type WineConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [WineEdge]!
+  aggregate: AggregateWine!
+}
+
+input WineCreateInput {
+  name: String!
+  type: String!
+  price: Float!
+  Description: String!
+}
+
+input WineCreateManyInput {
+  create: [WineCreateInput!]
+  connect: [WineWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type WineEdge {
+  """The item at the end of the edge."""
+  node: Wine!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum WineOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  type_ASC
+  type_DESC
+  price_ASC
+  price_DESC
+  Description_ASC
+  Description_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type WinePreviousValues {
+  id: ID!
+  name: String!
+  type: String!
+  price: Float!
+  Description: String!
+}
+
+type WineSubscriptionPayload {
+  mutation: MutationType!
+  node: Wine
+  updatedFields: [String!]
+  previousValues: WinePreviousValues
+}
+
+input WineSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WineSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WineSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WineSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: WineWhereInput
+}
+
+input WineUpdateDataInput {
+  name: String
+  type: String
+  price: Float
+  Description: String
+}
+
+input WineUpdateInput {
+  name: String
+  type: String
+  price: Float
+  Description: String
+}
+
+input WineUpdateManyInput {
+  create: [WineCreateInput!]
+  connect: [WineWhereUniqueInput!]
+  disconnect: [WineWhereUniqueInput!]
+  delete: [WineWhereUniqueInput!]
+  update: [WineUpdateWithWhereUniqueNestedInput!]
+  upsert: [WineUpsertWithWhereUniqueNestedInput!]
+}
+
+input WineUpdateWithWhereUniqueNestedInput {
+  where: WineWhereUniqueInput!
+  data: WineUpdateDataInput!
+}
+
+input WineUpsertWithWhereUniqueNestedInput {
+  where: WineWhereUniqueInput!
+  update: WineUpdateDataInput!
+  create: WineCreateInput!
+}
+
+input WineWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WineWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WineWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WineWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  type: String
+
+  """All values that are not equal to given value."""
+  type_not: String
+
+  """All values that are contained in given list."""
+  type_in: [String!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [String!]
+
+  """All values less than the given value."""
+  type_lt: String
+
+  """All values less than or equal the given value."""
+  type_lte: String
+
+  """All values greater than the given value."""
+  type_gt: String
+
+  """All values greater than or equal the given value."""
+  type_gte: String
+
+  """All values containing the given string."""
+  type_contains: String
+
+  """All values not containing the given string."""
+  type_not_contains: String
+
+  """All values starting with the given string."""
+  type_starts_with: String
+
+  """All values not starting with the given string."""
+  type_not_starts_with: String
+
+  """All values ending with the given string."""
+  type_ends_with: String
+
+  """All values not ending with the given string."""
+  type_not_ends_with: String
+  price: Float
+
+  """All values that are not equal to given value."""
+  price_not: Float
+
+  """All values that are contained in given list."""
+  price_in: [Float!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Float!]
+
+  """All values less than the given value."""
+  price_lt: Float
+
+  """All values less than or equal the given value."""
+  price_lte: Float
+
+  """All values greater than the given value."""
+  price_gt: Float
+
+  """All values greater than or equal the given value."""
+  price_gte: Float
+  Description: String
+
+  """All values that are not equal to given value."""
+  Description_not: String
+
+  """All values that are contained in given list."""
+  Description_in: [String!]
+
+  """All values that are not contained in given list."""
+  Description_not_in: [String!]
+
+  """All values less than the given value."""
+  Description_lt: String
+
+  """All values less than or equal the given value."""
+  Description_lte: String
+
+  """All values greater than the given value."""
+  Description_gt: String
+
+  """All values greater than or equal the given value."""
+  Description_gte: String
+
+  """All values containing the given string."""
+  Description_contains: String
+
+  """All values not containing the given string."""
+  Description_not_contains: String
+
+  """All values starting with the given string."""
+  Description_starts_with: String
+
+  """All values not starting with the given string."""
+  Description_not_starts_with: String
+
+  """All values ending with the given string."""
+  Description_ends_with: String
+
+  """All values not ending with the given string."""
+  Description_not_ends_with: String
+  _MagicalBackRelation_CollectionToWine_every: CollectionWhereInput
+  _MagicalBackRelation_CollectionToWine_some: CollectionWhereInput
+  _MagicalBackRelation_CollectionToWine_none: CollectionWhereInput
+}
+
+input WineWhereUniqueInput {
+  id: ID
 }

@@ -2,11 +2,25 @@
 
 type Query {
   me: User!
+  collections(where: CollectionWhereInput): [Collection]!
+  collection(where: CollectionWhereUniqueInput!): Collection
+  # likedcollections: [Collection]!
+  allcollections:[Collection]!
+  wines(where: WineWhereInput): [Wine!]!
+  settings(where: SettingWhereInput): [Setting!]!
+  foods(where: FoodWhereInput): [Food!]!
+  others(where: OtherWhereInput): [Other!]!
+  likes(where: LikeWhereInput): [Like!]!
+
 }
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  createcollection(data: CollectionCreateInput!): Collection!
+  commentcollection(text: String!, name: String!): Collection!
+  likecollection(name: String!): Collection!
+  unlikecollection(name: String!): Like!
 }
 
 type AuthPayload {
@@ -17,5 +31,9 @@ type AuthPayload {
 type User {
   id: ID!
   email: String!
-  name: String!
+  # username: String!
+  # name: String!
+  password: String!
+  # collections: [Collection]!
+  # likes: [Like!]!
 }
