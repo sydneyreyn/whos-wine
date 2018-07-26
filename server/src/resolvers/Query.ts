@@ -14,9 +14,9 @@ collections: async (parent, args, ctx: Context, info) => {
     info
   )
 },
-allcollections: async (parent, args, ctx: Context, info) => {
-  return ctx.db.query.collections({})
-},
+// allcollections: async (parent, args, ctx: Context, info) => {
+//   return ctx.db.query.collections({})
+// },
 // wines: async (parent, args, ctx: Context, info) => {
 //   return ctx.db.query.wines({ ...args }, info)
 // },
