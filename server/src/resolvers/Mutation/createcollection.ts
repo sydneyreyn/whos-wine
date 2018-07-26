@@ -1,6 +1,4 @@
 import { Context, getUserId } from "../../utils"
-import { createWriteStream } from "fs"
-// const shortid = require("shortid")
 
 export const collection = {
     createcollection: async (parent, args, ctx: Context, info) => {
@@ -10,9 +8,9 @@ export const collection = {
         {
           ...args,
           // pictureUrl: pictureUrl,
-          // creator: {
-          //   id: id
-          // }
+          creator: {
+            id: id
+          }
         },
         info
       )

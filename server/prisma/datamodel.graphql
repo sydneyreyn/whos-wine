@@ -3,72 +3,57 @@ type User {
  name: String!
  email: String! @unique
  password: String!
-#  collections: [Collection!]!
-#  comments: [Comment!]!
-#  likes: [Like!]!
+ collections: [Collection!]!
+ comments: [Comment!]!
+ likes: [Like!]!
 }
 
 type Collection {
-id: ID! @unique
-  name: String! @unique
-  description: String!
-  wines: String!
-  creator: User!
-#   comments: [Comment!]!
-#   likes: [Like!]!
-#   pictureUrl: String
-#   price: Float!
-  settings: String!
-  category: String!
-  foods: String!
+ id: ID! @unique
+ name: String!
+ description: String!
+ wines:[Wine!]!
+ settings: [Setting!]!
+ others: [Other!]!
+ foods: [Food!]!
+ likes: [Like!]!
+ comments: [Comment!]!
 }
-#  id: ID! @unique
-#  name: String!
-#  description: String!
-#  user: User!
-# #  creator: User!
-#  wines:[Wine!]!
-#  settings: [Setting!]!
-# #  others: [Other!]!
-#  foods: [Food!]!
-# #  likes: [Like!]!
-# #  comments: [Comment!]!
-# }
 
-# type Wine {
-#  id: ID! @unique
-#  name: String!
-#  type: String!
-#  price: Float!
-#  Description: String!
-# }
+type Wine {
+ id: ID! @unique
+ name: String!
+ type: String!
+ price: Float!
+ Description: String!
+}
 
-# type Setting {
-#  id: ID! @unique
-#  name: String!
-#  Description: String!
-# }
+type Setting {
+ id: ID! @unique
+ name: String!
+ Description: String!
+}
 
-# type Food {
-#  id: ID! @unique
-#  name: String!
-#  Description: String!
-# }
+type Food {
+ id: ID! @unique
+ name: String!
+ Description: String!
+}
 
-# type Other {
-#  id: ID! @unique
-#  name: String!
-#  Description: String!
-# }
+type Other {
+ id: ID! @unique
+ name: String!
+ Description: String!
+}
 
-# type Like {
-#  id: ID! @unique
-#  author: User!
-#  collection: Collection!
-# }
+type Like {
+ id: ID! @unique
+ author: User!
+ collection: Collection!
+}
 
-# type Comment {
-#  text: String!
-#  author: User!
-#  collection: Collection!
-# }
+type Comment {
+ text: String!
+ author: User!
+ collection: Collection!
+}
