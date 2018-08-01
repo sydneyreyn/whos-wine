@@ -15,7 +15,7 @@ var db = new prisma_1.Prisma({
     fragmentReplacements: resolvers_1.fragmentReplacements,
     endpoint: process.env.PRISMA_ENDPOINT,
     debug: true,
-    secret: process.env.PRISMA_SECRET // only needed if specified in `database/prisma.yml` (value set in `.env`)
+    secret: process.env.PRISMA_SECRET // only needed if specified in 'database/prisma.yml' (value set in `.env`)
 });
 var server = new graphql_yoga_1.GraphQLServer({
     typeDefs: "./src/schema.graphql",
