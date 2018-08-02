@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://j4-ixk.sydneyreyn.client.exp.direct",
+  "packagerNgrokUrl": "https://packager.j4-ixk.sydneyreyn.client.exp.direct",
+  "ngrokPid": 73396
 }

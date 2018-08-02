@@ -64,7 +64,7 @@ export default class LoginScreen extends React.Component {
  static navigationOptions = ({ navigation }) => {
    const { state, navigate } = navigation;
    return {
-     title: 'LoginScreen.js'
+     title: 'Login'
    };
  };
 
@@ -93,21 +93,23 @@ export default class LoginScreen extends React.Component {
                <View style={styles.container}>
                  <StatusBar barStyle="light-content" />
                  <View style={styles.loginHolder}>
+                 <Text style={styles.welcomeText}>log in</Text>
+                <Text style={styles.subtitleText}>    </Text>
                    <Form
                      ref={c => (this._form = c)}
                      type={User}
                      options={options}
                    />
-                   <Button
-                     title="Log in"
-                     color="#911826"
+                   <Button style={styles.loginHolder}
+                     title="➡"
+                     color="#8B008B"
                      onPress={async () => {
                        const value = this._form.getValue(); // use that ref to get the form value
 try {
                          const { data } = await login({
                            variables: {
                              email: value.email,
-                             password: value.password
+                             password: value.password,
                            }
                          });
                          await AsyncStorage.setItem("token", data.login.token);
@@ -115,7 +117,7 @@ try {
                            "username",
                            data.login.user.email
                          );
-                         this.props.navigation.navigate("Home");
+                         this.props.navigation.navigate("Profile");
                          console.log({ data });
                        } catch (error) {
                          // redirect to sign up
@@ -127,14 +129,16 @@ try {
                      }}
                    />
                  </View>
-                 <View style={styles.signupOption}>
-                   <Text style={{ fontSize: 18 }}>New to </Text>
+                 {/* <View style={styles.signupOption}>
+                   <Text style={styles.signupOption}>new to who's wine?</Text>
+                   <Text style={styles.signupOption}> </Text>
                    <Button
                      title="Sign up"
-                     color="#911826"
+                     color="#8B008B"
+                     fontsize="10"
                      onPress={() => this.props.navigation.navigate("Signup")}
                    />
-                 </View>
+                 </View> */}
                </View>
              </TouchableWithoutFeedback>
            </KeyboardAvoidingView>
@@ -158,12 +162,37 @@ const styles = StyleSheet.create({
    color: "#272727",
    fontSize: 20,
    fontWeight: "bold",
-   marginBottom: 100
+   marginBottom: 100,
  },
- signupOption: {
-   flexDirection: "row",
-   alignItems: "center",
-   justifyContent: "center"
- }
+//  signupOption: {
+//    flexDirection: "row",
+//    alignItems: "center",
+//    justifyContent: "center",
+//    fontSize: 15,
+//    fontFamily: "Futura",
+//    fontWeight: "bold",
+//    fontStyle: "italic",
+//    color: "black",
+//  },
+ welcomeText: {
+    fontSize: 40,
+    fontFamily: "Futura",
+    justifyContent: "center",
+    fontWeight: "bold",
+    color: "#8B008B"
+  },
+  subtitleText: {
+    fontSize: 15,
+    fontFamily: "Futura",
+    justifyContent: "center",
+    fontStyle: "italic",
+    color: "black",
+  },
+ loginHolder: {
+    fontSize: 15,
+    fontFamily: "Futura",
+    fontWeight: "bold",
+    color: "#8B008B"
+ },
 });
 

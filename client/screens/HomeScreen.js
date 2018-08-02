@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
   async componentDidMount() {
     const token = await AsyncStorage.getItem("token");
     if (!token) {
-      this.props.navigation.navigate("Login");
+      this.props.navigation.navigate("Home");
     }
   }
 
@@ -37,10 +37,12 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <View style={styles.homeHolder}>
-          <Text style={styles.welcomeText}>Welcome to</Text>
-          <Text style={styles.welcomeText}>who's wine</Text>
-          <Text style={styles.welcomeText}>   </Text>
-          <Image source={require('../logo.png')} />
+          <Text style={styles.welcomeText}>who's wine?</Text>
+          <Text style={styles.subtitleText}>    </Text>
+          <Image source={require('../assets/images/icon.png')} />
+          <Text style={styles.subtitleText}> </Text>
+          <Text style={styles.subtitleText}>portuguese wines, wherever you want </Text>
+          <Text style={styles.subtitleText}>them to be</Text>
           <View style={styles.buttonsHolder}>
           <TouchableOpacity>
             <Button
@@ -57,7 +59,7 @@ export default class HomeScreen extends React.Component {
               title="Sign up"
               color="#8B008B"
               onPress={() => {
-                this.props.navigation.navigate("Sign up");
+                this.props.navigation.navigate("Signup");
                 console.log("Button clicked");
               }}
             />
@@ -81,17 +83,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     padding: 20,
-    marginTop: 20,
+    marginTop: 10,
     justifyContent: "center",
   },
   welcomeText: {
-    fontSize: 30,
+    fontSize: 40,
     fontFamily: "Futura",
     justifyContent: "center",
     fontWeight: "bold",
     color: "#8B008B"
   },
+  subtitleText: {
+    fontSize: 15,
+    fontFamily: "Futura",
+    justifyContent: "center",
+    fontStyle: "italic",
+    color: "black",
+  },
   buttonsHolder: {
-    marginTop: 30
-  }
+    marginTop: 30,
+    fontWeight: "bold",
+    fontFamily: "Futura",
+  },
 });
