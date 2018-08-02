@@ -8,19 +8,11 @@ import {
   View,
   StatusBar,
   AsyncStorage,
-  Button
+  Button,
 } from "react-native";
 import { WebBrowser } from "expo";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { createStackNavigator } from 'react-navigation';
-
-// const App = createStackNavigator({
-//   Home: { screen: HomeScreen },
-//   Login: { screen: LoginScreen },
-// });
-
-// export default App
 
 import { MonoText } from "../components/StyledText";
 
@@ -50,6 +42,7 @@ export default class HomeScreen extends React.Component {
           <Text style={styles.welcomeText}>   </Text>
           <Image source={require('../logo.png')} />
           <View style={styles.buttonsHolder}>
+          <TouchableOpacity>
             <Button
               title="Login"
               color="#8B008B"
@@ -58,13 +51,17 @@ export default class HomeScreen extends React.Component {
                 console.log("Button clicked");
               }}
             />
+            </TouchableOpacity>
+            <TouchableOpacity>
             <Button
               title="Sign up"
               color="#8B008B"
-              onPress={async () => {
+              onPress={() => {
                 this.props.navigation.navigate("Sign up");
+                console.log("Button clicked");
               }}
             />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
