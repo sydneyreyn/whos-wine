@@ -64,8 +64,7 @@ export default class LoginScreen extends React.Component {
  static navigationOptions = ({ navigation }) => {
    const { state, navigate } = navigation;
    return {
-     title: "Login",
-     header: null
+     title: 'LoginScreen.js'
    };
  };
 
