@@ -29,13 +29,26 @@ const User = t.struct({
 });
 
 const options = {
-  auto: "placeholders"
-  // fields: {
-  //   password: {
+  auto: "placeholders",
+  fields: {
+    password: {
+        secureTextEntry: true,
+        error: "Required field",
+    },
+    email: {
+        error: "Required field",
+    },
+    name: {
+        error: "Required field",
+    },
+    username: {
+        error: "Required field",
+    },
   //     password: true,
   //     secureTextEntry: true
   //   }
   // }
+}
 };
 
 // BACKEND SETUP
@@ -97,7 +110,7 @@ export default class SignupScreen extends React.Component {
                       options={options}
                     />
                     <Button
-                      title="➡"
+                      title="Submit"
                       color="#8B008B"
                       onPress={async () => {
                         const value = this._form.getValue(); // use that ref to get the form value
@@ -113,14 +126,15 @@ export default class SignupScreen extends React.Component {
                           });
                           AsyncStorage.setItem("token", data.signup.token);
                           AsyncStorage.setItem(
-                            "username",
-                            data.signup.user.username
+                            "email",
+                            data.signup.user.email
                           );
 
                           this.props.navigation.navigate("Home");
 
                           console.log({ data });
-                        } catch (error) {
+                        } 
+                        catch (error) {
                           // redirect to sign up
                           console.log({ error });
 
@@ -130,6 +144,14 @@ export default class SignupScreen extends React.Component {
                         }
                       }}
                     />
+                    <Button
+              title="Return to home"
+              color="#8B008B"
+              onPress={async () => {
+                this.props.navigation.navigate("Home");
+                console.log("Button clicked");
+              }}
+            />
                   </View>
                 </View>
               </TouchableWithoutFeedback>

@@ -25,6 +25,7 @@ export const auth = {
     if (!valid) {
       throw new Error("Invalid password")
     }
+    console.log({here:user})
 
     return {
       token: jwt.sign({ userId: user.id }, process.env.APP_SECRET),

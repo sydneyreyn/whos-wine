@@ -80,7 +80,7 @@ import AppNavigator from "./navigation/AppNavigator";
 
 // Apollo client
 
-const httpLink = new HttpLink({ uri: "http://192.168.1.153:4000" });
+const httpLink = new HttpLink({ uri: "http://192.168.1.4:4000" });
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = await AsyncStorage.getItem("token");

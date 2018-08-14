@@ -11,13 +11,15 @@ import {
  KeyboardAvoidingView,
  TouchableWithoutFeedback,
  Scene,
- StatusBar
+ StatusBar,
+ data
 } from "react-native";
 
 const templates = require("tcomb-form-native/lib/templates/bootstrap");
 
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import Profile from "./ProfileScreen.js";
 
 var DismissKeyboard = require("dismissKeyboard");
 
@@ -30,26 +32,36 @@ t.form.Form.templates = templates;
 const Form = t.form.Form;
 const User = t.struct({
  email: t.String,
- password: t.String
- // rememberMe: t.Boolean
+ password: t.String,
+//  rememberMe: t.Boolean,
 });
 
 const options = {
- auto: "placeholders"
- // fields: {
- //   password: {
- //     secureTextEntry: true,
+ auto: "placeholders",
+ fields: {
+   password: {
+    //  secureTextEntry: true,
+     error: "Required field",
+   },
+   email: {
+    error: "Required field",
+   }
  //     autoCorrect: false,
- //     returnKeyType: "next",
- //     password: true
- //   }
- // }
+    //  returnKeyType: "next",
+    //  password: true
+ }
 };
 
 // //BACKEND SET UP
 const LOGIN = gql`
- mutation login($email: String!, $password: String!) {
-   login(email: $email, password: $password) {
+ mutation login(
+     $email: String!
+     $password: String!
+     ) {
+   login(
+       email: $email, 
+       password: $password
+    ) {
      token
      user {
        id
@@ -64,19 +76,20 @@ export default class LoginScreen extends React.Component {
  static navigationOptions = ({ navigation }) => {
    const { state, navigate } = navigation;
    return {
-     title: 'Login'
+     title: 'Profile'
    };
  };
 
  async componentDidMount() {
    const token = await AsyncStorage.getItem("token");
    if (token) {
-     this.props.navigation.navigate("Home");
+     this.props.navigation.navigate('Profile');
    }
  }
 
  handleSubmit = () => {
    const value = this._form.getValue(); // use that ref to get the form value
+   console.log('value: ', value);
  };
  
  render() {
@@ -96,38 +109,52 @@ export default class LoginScreen extends React.Component {
                  <Text style={styles.welcomeText}>log in</Text>
                 <Text style={styles.subtitleText}>    </Text>
                    <Form
-                     ref={c => (this._form = c)}
+                     ref={c => this._form = c}
                      type={User}
                      options={options}
                    />
                    <Button style={styles.loginHolder}
-                     title="➡"
+                     title="Submit"
                      color="#8B008B"
                      onPress={async () => {
                        const value = this._form.getValue(); // use that ref to get the form value
-try {
+                       console.log("Login page submit button clicked");
+
+                        try {
                          const { data } = await login({
                            variables: {
                              email: value.email,
                              password: value.password,
                            }
                          });
+                         console.log({ data });
                          await AsyncStorage.setItem("token", data.login.token);
                          await AsyncStorage.setItem(
-                           "username",
+                           "email",
                            data.login.user.email
-                         );
-                         this.props.navigation.navigate("Profile");
-                         console.log({ data });
-                       } catch (error) {
-                         // redirect to sign up
-                         console.log({ error });
-                         Alert.alert(
-                           "There was an error logging you in. Try again!"
-                         );
+                        );
+                        this.props.navigation.navigate('Profile');
+
                        }
+                       catch (e) {
+                        console.log({ e })
+                        this.props.navigation.navigate('Login');
+
+
+                         Alert.alert(
+                            "There was an error logging you in. Please try again!"
+                         );
+                        }
                      }}
                    />
+                   <Button
+              title="Return to home"
+              color="#8B008B"
+              onPress={async () => {
+                this.props.navigation.navigate("Home");
+                console.log("Button clicked");
+              }}
+            />
                  </View>
                  {/* <View style={styles.signupOption}>
                    <Text style={styles.signupOption}>new to who's wine?</Text>

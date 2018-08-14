@@ -50,13 +50,13 @@ export default class HomeScreen extends React.Component {
               color="#8B008B"
               onPress={async () => {
                 this.props.navigation.navigate("Login");
-                console.log("Button clicked");
+                console.log("Button to login screen clicked");
               }}
             />
             </TouchableOpacity>
             <TouchableOpacity>
             <Button
-              title="Sign up"
+              title="Create an account"
               color="#8B008B"
               onPress={() => {
                 this.props.navigation.navigate("Signup");
