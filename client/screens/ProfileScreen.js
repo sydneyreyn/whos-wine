@@ -6,10 +6,12 @@ import {
  Image,
  Button,
  AsyncStorage,
- StatusBar
+ StatusBar,
+ data
 } from "react-native";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
+
 const GET_MY_PROFILE = gql`
  query getMyProfile {
    collection {
@@ -40,7 +42,9 @@ export default class ProfileScreen extends React.Component {
  static navigationOptions = ({ navigation }) => {
    const { state, navigate } = navigation;
    return {
-     title: "Profile"
+     title: "Profile",
+     headerMode: "screen",
+     mode: "card"
    };
  };
  render() {
@@ -61,14 +65,16 @@ export default class ProfileScreen extends React.Component {
                this.props.navigation.navigate("Login");
              }
            }
-           if (!data.me) {
-             return <Text>"no data"</Text>;
-           }
+        //    if (!data.me) {
+        //      return <Text>"no data"</Text>;
+        //    }
            return (
              <View style={styles.profileHolder}>
-               <View style={styles.profileInfo}>
-                 <Text style={styles.profileName}>{data.collection.name}</Text>
-                 <Text style={styles.profileDescription}>{data.collection.description}</Text>
+               <View style={styles.welcomeText}>
+               <Text> Welcome to your secure profile page!!!!</Text>
+               <Image source={require('../assets/images/icon.png')} />
+                 {/* <Text style={styles.profileName}>{data.collection.name}</Text>
+                 <Text style={styles.profileDescription}>{data.collection.description}</Text> */}
                </View>
              </View>
            );
@@ -94,6 +100,14 @@ const styles = StyleSheet.create({
    backgroundColor: "#fff",
    justifyContent: "center"
  },
+ welcomeText: {
+    fontSize: 40,
+    fontFamily: "Futura",
+    justifyContent: "center",
+    alignItems: "center",
+    fontWeight: "bold",
+    color: "#8B008B"
+  },
  profileHolder: {
    flex: 1,
    marginTop: 100,
@@ -120,3 +134,4 @@ const styles = StyleSheet.create({
    alignItems: "center"
  }
 });
+  

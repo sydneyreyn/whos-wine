@@ -5,22 +5,29 @@ import {
   StyleSheet,
   Button,
   Text,
+  TextInput,
   AsyncStorage,
+  Alert,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Alert,
-  StatusBar
+  StatusBar, 
+  data
 } from "react-native";
+
+const templates = require("tcomb-form-native/lib/templates/bootstrap");
 
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import LoginScreen from './LoginScreen.js';
 
 var DismissKeyboard = require("dismissKeyboard");
 
 // FORM SET UP
 import t from "tcomb-form-native";
-const Form = t.form.Form;
 
+t.form.Form.templates = templates;
+
+const Form = t.form.Form;
 const User = t.struct({
   name: t.String,
   email: t.String,
@@ -32,7 +39,7 @@ const options = {
   auto: "placeholders",
   fields: {
     password: {
-        secureTextEntry: true,
+        // secureTextEntry: true,
         error: "Required field",
     },
     email: {
@@ -86,6 +93,7 @@ export default class SignupScreen extends React.Component {
 
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
+    console.log('value: ', value);
   };
 
   render() {
@@ -114,6 +122,7 @@ export default class SignupScreen extends React.Component {
                       color="#8B008B"
                       onPress={async () => {
                         const value = this._form.getValue(); // use that ref to get the form value
+                        console.log("Signup page submit button clicked");
 
                         try {
                           const { data } = await signup({
@@ -121,22 +130,22 @@ export default class SignupScreen extends React.Component {
                               name: value.name,
                               email: value.email,
                               username: value.username,
-                              password: value.password
+                              password: value.password,
                             }
                           });
+                          console.log({ data });
                           AsyncStorage.setItem("token", data.signup.token);
                           AsyncStorage.setItem(
                             "email",
                             data.signup.user.email
                           );
+                          this.props.navigation.navigate('Login');
 
-                          this.props.navigation.navigate("Home");
-
-                          console.log({ data });
                         } 
-                        catch (error) {
+                        catch (e) {
                           // redirect to sign up
-                          console.log({ error });
+                          console.log({ e });
+                          this.props.navigation.navigate('Signup');
 
                           Alert.alert(
                             "There was an error signing you up. Try again!"
